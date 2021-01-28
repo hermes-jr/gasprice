@@ -1,0 +1,50 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title>Cars</title>
+
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"/>
+    <script type="text/javascript" th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+    <link rel="stylesheet" th:href="@{/css/main.css}"/>
+
+</head>
+
+<body>
+
+<main role="main" class="container">
+
+    <ul th:if="${currentCarsTablePage.totalPages > 0}" class="pagination">
+        <li th:each="pageNumber : ${pageNumbers}" class="page-item"
+            th:classappend="${pageNumber==currentCarsTablePage.number + 1} ? active"><a
+                th:href="@{/cars(size=${currentCarsTablePage.size}, page=${pageNumber})}"
+                th:text="${pageNumber}" class="page-link"></a></li>
+    </ul>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th scope="col">Id</th>
+            <th scope="col">Name</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="car: ${currentCarsTablePage.content}">
+            <td th:text="${car.id}"></td>
+            <td th:text="${car.name}"></td>
+        </tr>
+        </tbody>
+    </table>
+
+    <div class="container"><br/>
+        <div class="alert alert-success">
+            <strong>Success!</strong> Bootstrap styles are working as expected.
+        </div>
+    </div>
+
+</main>
+
+
+</body>
+</html>

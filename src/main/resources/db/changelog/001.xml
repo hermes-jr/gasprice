@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.3.xsd">
+
+    <changeSet id="001.01.am" author="antonov_m">
+        <createTable tableName="cars">
+            <column name="id" autoIncrement="true" type="INT" remarks="Car ID">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="name" type="VARCHAR(128)" remarks="Car Name">
+                <constraints nullable="false"/>
+            </column>
+            <column name="vin" type="VARCHAR(64)" remarks="VIN"/>
+            <column name="estimated_consumption" type="DECIMAL(6,3)" remarks="Estimated Fuel Consumption"/>
+            <column name="image" type="MEDIUMBLOB" remarks="Picture">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <createTable tableName="petrols">
+            <column name="id" autoIncrement="true" type="INT" remarks="Petrol ID">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="name" type="VARCHAR(128)" remarks="Petrol Name">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <createTable tableName="refuels">
+            <column name="id" autoIncrement="true" type="INT" remarks="ID of Refuelling">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="petrol_id" type="INT" remarks="Petrol ID">
+                <constraints foreignKeyName="fk_refuels_to_petrol" referencedTableName="petrols"
+                             referencedColumnNames="id" nullable="false"/>
+            </column>
+            <column name="car_id" type="INT" remarks="Car ID">
+                <constraints foreignKeyName="fk_refuels_to_car" referencedTableName="cars" referencedColumnNames="id"
+                             nullable="false"/>
+            </column>
+            <column name="amount" type="DECIMAL(10,5)" remarks="Amount of Fuel">
+                <constraints nullable="false"/>
+            </column>
+            <column name="price" type="DECIMAL(10,2)" remarks="Price per Unit">
+                <constraints nullable="false"/>
+            </column>
+            <column name="mileage" type="INT" remarks="Mileage at the Moment"/>
+            <column name="datetime" type="DATETIME" remarks="Refuelling timestamp">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+    </changeSet>
+
+</databaseChangeLog>

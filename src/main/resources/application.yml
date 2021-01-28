@@ -1,0 +1,31 @@
+server.port: 39298
+
+spring:
+  #  profiles:
+  #    active: dev
+  datasource:
+    platform: mysql
+    hikari:
+      connection-timeout: 600000
+      maximum-pool-size: 9
+    username: gasprice
+    url: jdbc:mysql://${MYSQL_HOST:localhost}:3306/gasprice2?serverTimezone=Europe/Moscow
+  jpa:
+    database: MYSQL
+    database-platform: org.hibernate.dialect.MySQL8Dialect
+    properties.hibernate.current_session_context_class: org.springframework.orm.hibernate5.SpringSessionContext
+    show-sql: false
+    open-in-view: false
+  liquibase:
+    change-log: classpath:/db/changelog/changelog.xml
+  servlet:
+    multipart:
+      max-file-size: 300MB
+      max-request-size: 300MB
+
+logging:
+  level:
+    org.hibernate.orm.deprecation: off
+    net.cyllene.gasprice: debug
+    org.springframework: debug
+  file.path: /tmp/thymeleaf-playground.log
