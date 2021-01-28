@@ -1,0 +1,37 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Petrols</title>
+
+    <script data-th-replace="fragments/common_headers.html :: includes"></script>
+
+</head>
+
+<body>
+
+<nav data-th-replace="fragments/navbar.html :: navbar"></nav>
+
+<main role="main" class="container">
+
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th scope="col">Id</th>
+            <th scope="col">Name</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr data-th-each="petrol: ${petrols}">
+            <td data-th-text="${petrol.id}">1</td>
+            <td data-th-text="${petrol.name}">Standard-100</td>
+        </tr>
+        </tbody>
+    </table>
+
+</main>
+
+</body>
+</html>

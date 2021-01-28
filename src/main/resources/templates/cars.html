@@ -1,26 +1,26 @@
 <!DOCTYPE HTML>
-<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<html lang="en">
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <title>Cars</title>
 
-    <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"/>
-    <script type="text/javascript" th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
-    <link rel="stylesheet" th:href="@{/css/main.css}"/>
+    <script data-th-replace="fragments/common_headers.html :: includes"></script>
 
 </head>
 
 <body>
 
+<nav data-th-replace="fragments/navbar.html :: navbar"></nav>
+
 <main role="main" class="container">
 
-    <ul th:if="${currentCarsTablePage.totalPages > 0}" class="pagination">
-        <li th:each="pageNumber : ${pageNumbers}" class="page-item"
-            th:classappend="${pageNumber==currentCarsTablePage.number + 1} ? active"><a
-                th:href="@{/cars(size=${currentCarsTablePage.size}, page=${pageNumber})}"
-                th:text="${pageNumber}" class="page-link"></a></li>
+    <ul data-th-if="${currentCarsTablePage.totalPages > 0}" class="pagination">
+        <li data-th-each="pageNumber : ${pageNumbers}" class="page-item"
+            data-th-classappend="${pageNumber==currentCarsTablePage.number + 1} ? active"><a
+                data-th-href="@{/cars(size=${currentCarsTablePage.size}, page=${pageNumber})}"
+                data-th-text="${pageNumber}" class="page-link">1</a></li>
     </ul>
     <table class="table table-striped">
         <thead>
@@ -30,9 +30,9 @@
         </tr>
         </thead>
         <tbody>
-        <tr th:each="car: ${currentCarsTablePage.content}">
-            <td th:text="${car.id}"></td>
-            <td th:text="${car.name}"></td>
+        <tr data-th-each="car: ${currentCarsTablePage.content}">
+            <td data-th-text="${car.id}">1</td>
+            <td data-th-text="${car.name}">Cheetah</td>
         </tr>
         </tbody>
     </table>
@@ -44,7 +44,6 @@
     </div>
 
 </main>
-
 
 </body>
 </html>

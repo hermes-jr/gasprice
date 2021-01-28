@@ -7,12 +7,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import javax.inject.Inject;
-
 @Service
 @RequiredArgsConstructor
 public class CarService {
-    @Inject
     private final CarRepository carRepository;
 
     public Page<Car> findPaginated(Pageable pageable) {
