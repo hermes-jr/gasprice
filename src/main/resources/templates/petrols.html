@@ -16,16 +16,16 @@
 
 <main role="main" class="container">
 
-    <table class="table table-striped">
+    <table class="table">
         <thead>
         <tr>
-            <th scope="col">Id</th>
+            <th scope="col" class="text-right">Id</th>
             <th scope="col">Name</th>
         </tr>
         </thead>
         <tbody>
         <tr data-th-each="petrol: ${petrols}">
-            <td data-th-text="${petrol.id}">1</td>
+            <td data-th-text="${petrol.id}" class="text-right">1</td>
             <td data-th-text="${petrol.name}">Standard-100</td>
         </tr>
         </tbody>

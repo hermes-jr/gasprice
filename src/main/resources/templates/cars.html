@@ -22,17 +22,19 @@
                 data-th-href="@{/cars(size=${currentCarsTablePage.size}, page=${pageNumber})}"
                 data-th-text="${pageNumber}" class="page-link">1</a></li>
     </ul>
-    <table class="table table-striped">
+    <table class="table">
         <thead>
         <tr>
-            <th scope="col">Id</th>
+            <th scope="col" class="text-right">Id</th>
             <th scope="col">Name</th>
+            <th scope="col" class="text-right">Expected consumption</th>
         </tr>
         </thead>
         <tbody>
         <tr data-th-each="car: ${currentCarsTablePage.content}">
-            <td data-th-text="${car.id}">1</td>
+            <td data-th-text="${car.id}" class="text-right">1</td>
             <td data-th-text="${car.name}">Cheetah</td>
+            <td data-th-text="${#numbers.formatDecimal(car.estimatedConsumption,1,2)}" class="text-right">9.80</td>
         </tr>
         </tbody>
     </table>
