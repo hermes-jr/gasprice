@@ -1,21 +1,19 @@
 package net.cyllene.gasprice.controller;
 
 import lombok.RequiredArgsConstructor;
-import net.cyllene.gasprice.dto.CarDto;
 import net.cyllene.gasprice.dto.PetrolDto;
-import net.cyllene.gasprice.model.Car;
 import net.cyllene.gasprice.model.Petrol;
 import net.cyllene.gasprice.service.PetrolService;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 @Controller
 @RequiredArgsConstructor
@@ -34,4 +32,26 @@ public class PetrolController {
 
         return "petrols";
     }
+
+    @GetMapping(value = "/petrols/add")
+    public String addPetrolPage(Model model) {
+        model.addAttribute("petrol", new PetrolDto());
+        return "petrols_add";
+    }
+
+    @PostMapping("/petrols/add")
+    public String newPetrolSubmit(@Valid @ModelAttribute("petrol") PetrolDto petrol,
+                                  BindingResult bindingResult,
+                                  Model model) {
+        System.out.println("NEW PETROL REQUEST: " + petrol);
+        System.out.println("BR: " + bindingResult);
+        model.addAttribute("petrol", petrol);
+        if (bindingResult.hasErrors()) {
+            return "petrols_add";
+        }
+        // TODO: check and report unique name constraint
+        petrolService.persist(petrol);
+        return "redirect:/petrols";
+    }
+
 }

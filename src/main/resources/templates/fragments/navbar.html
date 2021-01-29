@@ -14,10 +14,10 @@
             <li class="nav-item" data-th-classappend="${#request.requestURI == '/' ? 'active':''}">
                 <a class="nav-link" data-th-href="@{/}">Summary</a>
             </li>
-            <li class="nav-item" data-th-classappend="${#request.requestURI == '/cars' ? 'active':''}">
+            <li class="nav-item" data-th-classappend="${#request.requestURI.startsWith('/cars') ? 'active':''}">
                 <a class="nav-link" data-th-href="@{/cars}">Cars</a>
             </li>
-            <li class="nav-item" data-th-classappend="${#request.requestURI == '/petrols' ? 'active':''}">
+            <li class="nav-item" data-th-classappend="${#request.requestURI.startsWith('/petrols') ? 'active':''}">
                 <a class="nav-link" data-th-href="@{/petrols}">Petrols</a>
             </li>
         </ul>

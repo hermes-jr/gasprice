@@ -1,0 +1,41 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Petrols :: Add</title>
+
+    <script data-th-replace="fragments/common_headers.html :: includes"></script>
+
+</head>
+
+<body>
+
+<nav data-th-replace="fragments/navbar.html :: navbar"></nav>
+
+<main role="main" class="container">
+
+    <form action="#" data-th-action="@{/petrols/add}" data-th-object="${petrol}" method="post">
+        <div class="form-group">
+            <label for="petrolName">Name</label>
+            <input type="text" class="form-control" id="petrolName" placeholder="АИ 100" data-th-field="*{name}"
+                   data-th-errorclass="is-invalid"
+            />
+            <div class="invalid-feedback" data-th-if="${#fields.hasErrors('name')}" data-th-errors="*{name}">
+                Name error.
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+
+        <div data-th-if="${#fields.hasGlobalErrors()}">
+            <div role="alert" class="alert alert-danger" data-th-each="err : ${#fields.globalErrors()}"
+                 data-th-text="${err}">...
+            </div>
+        </div>
+    </form>
+
+</main>
+
+</body>
+</html>
