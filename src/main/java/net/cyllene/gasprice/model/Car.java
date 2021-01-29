@@ -16,5 +16,5 @@ public class Car {
     private String vin;
     private BigDecimal estimatedConsumption;
     @Lob
-    private Byte[] image;
+    private byte[] image;
 }

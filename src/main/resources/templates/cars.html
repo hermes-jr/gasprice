@@ -25,6 +25,7 @@
     <table class="table table-sm">
         <thead>
         <tr>
+            <th scope="col">Image</th>
             <th scope="col" class="text-right">Id</th>
             <th scope="col">Name</th>
             <th scope="col" class="text-right">Expected consumption</th>
@@ -32,18 +33,16 @@
         </thead>
         <tbody>
         <tr data-th-each="car: ${currentCarsTablePage.content}">
+            <td>
+                <img alt="" src="" width="100px" height="75px"
+                     data-th-src="'data:image/jpeg;base64,' + ${car.imageBase64}" data-th-alt="${car.name}"/>
+            </td>
             <td data-th-text="${car.id}" class="text-right">1</td>
             <td data-th-text="${car.name}">Cheetah</td>
             <td data-th-text="${#numbers.formatDecimal(car.estimatedConsumption,1,2)}" class="text-right">9.80</td>
         </tr>
         </tbody>
     </table>
-
-    <div class="container"><br/>
-        <div class="alert alert-success">
-            <strong>Success!</strong> Bootstrap styles are working as expected.
-        </div>
-    </div>
 
 </main>
 
