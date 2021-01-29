@@ -29,7 +29,7 @@ class GaspriceApplicationTests {
         c1.setName("Aaaa");
         c1.setVin("Bbbb");
         c1.setEstimatedConsumption(BigDecimal.TEN);
-        c1.setImage(new Byte[]{});
+        c1.setImage(new byte[]{});
         assertThat(c1.getId()).isNull();
         c1 = carRepository.save(c1);
         int id = c1.getId();

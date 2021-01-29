@@ -19,7 +19,7 @@ public class PetrolService {
 
     public void persist(PetrolDto dto) {
         Petrol petrol = new Petrol();
-        petrol.setId(dto.getId() == null || dto.getId().equals(0) ? null : petrol.getId());
+        petrol.setId(dto.getId() == null || dto.getId().equals(0) ? null : dto.getId());
         petrol.setName(dto.getName());
         petrolRepository.saveAndFlush(petrol);
     }

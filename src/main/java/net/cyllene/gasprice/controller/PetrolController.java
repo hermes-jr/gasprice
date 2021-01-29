@@ -40,7 +40,7 @@ public class PetrolController {
     }
 
     @PostMapping("/petrols/add")
-    public String newPetrolSubmit(@Valid @ModelAttribute("petrol") PetrolDto petrol,
+    public String newPetrolSubmit(@ModelAttribute("petrol") @Valid  PetrolDto petrol,
                                   BindingResult bindingResult,
                                   Model model) {
         System.out.println("NEW PETROL REQUEST: " + petrol);

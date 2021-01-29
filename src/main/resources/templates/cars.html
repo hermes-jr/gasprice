@@ -16,12 +16,19 @@
 
 <main role="main" class="container">
 
-    <ul data-th-if="${currentCarsTablePage.totalPages > 0}" class="pagination">
-        <li data-th-each="pageNumber : ${pageNumbers}" class="page-item"
-            data-th-classappend="${pageNumber==currentCarsTablePage.number + 1} ? active"><a
-                data-th-href="@{/cars(size=${currentCarsTablePage.size}, page=${pageNumber})}"
-                data-th-text="${pageNumber}" class="page-link">1</a></li>
-    </ul>
+    <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+        <div class="btn-group mr-2" role="group" aria-label="Actions">
+            <a class="btn btn-primary mb-3" data-th-href="@{/cars/add}" role="button">Add</a>
+        </div>
+        <div class="btn-group" role="group" aria-label="Table pagination">
+            <ul data-th-if="${currentCarsTablePage.totalPages > 0}" class="pagination">
+                <li data-th-each="pageNumber : ${pageNumbers}" class="page-item"
+                    data-th-classappend="${pageNumber==currentCarsTablePage.number + 1} ? active"><a
+                        data-th-href="@{/cars(size=${currentCarsTablePage.size}, page=${pageNumber})}"
+                        data-th-text="${pageNumber}" class="page-link">1</a></li>
+            </ul>
+        </div>
+    </div>
     <table class="table table-sm">
         <thead>
         <tr>

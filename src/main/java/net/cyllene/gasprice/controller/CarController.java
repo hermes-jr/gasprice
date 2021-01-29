@@ -9,9 +9,17 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.validation.Valid;
+import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -47,5 +55,34 @@ public class CarController {
         }
 
         return "cars";
+    }
+
+
+    @GetMapping(value = "/cars/add")
+    public String addCarPage(Model model) {
+        model.addAttribute("car", new CarDto());
+        return "cars_add";
+    }
+
+    @PostMapping("/cars/add")
+    public String newCarSubmit(@RequestParam("carImage") MultipartFile carImage,
+                               @ModelAttribute("car") @Valid CarDto carDto,
+                               BindingResult bindingResult,
+                               Model model) throws IOException {
+        System.out.println("NEW CAR REQUEST: " + carDto);
+//        System.out.println("CAR IMAGE: " + Arrays.toString(carImage.getBytes()));
+        System.out.println("BR: " + bindingResult);
+        model.addAttribute("car", carDto);
+        if (carImage.isEmpty()) {
+            bindingResult.addError(new ObjectError("carImage", "image is required"));
+        }
+
+        if (bindingResult.hasErrors()) {
+            return "cars_add";
+        }
+
+        // TODO: check and report unique constraints if any. Validate image(?)
+        carService.persist(carDto, carImage.getBytes());
+        return "redirect:/cars";
     }
 }
