@@ -1,6 +1,7 @@
 package net.cyllene.gasprice.controller;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.java.Log;
 import net.cyllene.gasprice.dto.CarDto;
 import net.cyllene.gasprice.model.Car;
 import net.cyllene.gasprice.service.CarService;
@@ -10,22 +11,21 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.List;
+import java.util.logging.Level;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 @Controller
 @RequiredArgsConstructor
+@Log
 public class CarController {
     private final CarService carService;
 
@@ -65,24 +65,22 @@ public class CarController {
     }
 
     @PostMapping("/cars/add")
-    public String newCarSubmit(@RequestParam("carImage") MultipartFile carImage,
-                               @ModelAttribute("car") @Valid CarDto carDto,
+    public String newCarSubmit(@ModelAttribute("car") @Valid CarDto carDto,
                                BindingResult bindingResult,
                                Model model) throws IOException {
-        System.out.println("NEW CAR REQUEST: " + carDto);
-//        System.out.println("CAR IMAGE: " + Arrays.toString(carImage.getBytes()));
-        System.out.println("BR: " + bindingResult);
+
+        log.log(Level.FINE, "New car creation request: " + carDto);
+        log.log(Level.FINEST, "Binding result: " + bindingResult);
+
         model.addAttribute("car", carDto);
-        if (carImage.isEmpty()) {
-            bindingResult.addError(new ObjectError("carImage", "image is required"));
-        }
 
         if (bindingResult.hasErrors()) {
             return "cars_add";
         }
 
-        // TODO: check and report unique constraints if any. Validate image(?)
-        carService.persist(carDto, carImage.getBytes());
+        // TODO: check and report unique constraints if any
+        carService.persist(carDto);
+
         return "redirect:/cars";
     }
 }

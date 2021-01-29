@@ -1,6 +1,7 @@
 package net.cyllene.gasprice.controller;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.java.Log;
 import net.cyllene.gasprice.dto.PetrolDto;
 import net.cyllene.gasprice.model.Petrol;
 import net.cyllene.gasprice.service.PetrolService;
@@ -13,10 +14,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.logging.Level;
 import java.util.stream.Collectors;
 
 @Controller
 @RequiredArgsConstructor
+@Log
 public class PetrolController {
     private final PetrolService petrolService;
 
@@ -40,17 +43,21 @@ public class PetrolController {
     }
 
     @PostMapping("/petrols/add")
-    public String newPetrolSubmit(@ModelAttribute("petrol") @Valid  PetrolDto petrol,
+    public String newPetrolSubmit(@ModelAttribute("petrol") @Valid  PetrolDto petrolDto,
                                   BindingResult bindingResult,
                                   Model model) {
-        System.out.println("NEW PETROL REQUEST: " + petrol);
-        System.out.println("BR: " + bindingResult);
-        model.addAttribute("petrol", petrol);
+        log.log(Level.FINE, "New petrol creation request: " + petrolDto);
+        log.log(Level.FINEST, "Binding result: " + bindingResult);
+
+        model.addAttribute("petrol", petrolDto);
+
         if (bindingResult.hasErrors()) {
             return "petrols_add";
         }
+
         // TODO: check and report unique name constraint
-        petrolService.persist(petrol);
+        petrolService.persist(petrolDto);
+
         return "redirect:/petrols";
     }
 

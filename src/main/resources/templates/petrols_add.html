@@ -17,6 +17,12 @@
 <main role="main" class="container">
 
     <form action="#" data-th-action="@{/petrols/add}" data-th-object="${petrol}" method="post">
+        <div data-th-if="${#fields.hasGlobalErrors()}">
+            <div role="alert" class="alert alert-danger" data-th-each="err : ${#fields.globalErrors()}"
+                 data-th-text="${err}">Something went wrong...
+            </div>
+        </div>
+
         <div class="form-group">
             <label for="petrolName">Name</label>
             <input type="text" class="form-control" id="petrolName" placeholder="АИ 100" data-th-field="*{name}"
@@ -26,13 +32,9 @@
                 Name error.
             </div>
         </div>
+
         <button type="submit" class="btn btn-primary">Submit</button>
 
-        <div data-th-if="${#fields.hasGlobalErrors()}">
-            <div role="alert" class="alert alert-danger" data-th-each="err : ${#fields.globalErrors()}"
-                 data-th-text="${err}">...
-            </div>
-        </div>
     </form>
 
 </main>

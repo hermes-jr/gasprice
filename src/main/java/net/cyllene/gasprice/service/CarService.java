@@ -8,6 +8,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
+
 @Service
 @RequiredArgsConstructor
 public class CarService {
@@ -17,13 +19,13 @@ public class CarService {
         return carRepository.findAll(pageable);
     }
 
-    public void persist(CarDto dto, byte[] attachment) {
+    public void persist(CarDto dto) throws IOException {
         Car car = new Car();
         car.setId(dto.getId() == null || dto.getId().equals(0) ? null : dto.getId());
         car.setName(dto.getName());
         car.setVin(dto.getVin());
         car.setEstimatedConsumption(dto.getEstimatedConsumption());
-        car.setImage(attachment);
+        car.setImage(dto.getImage().getBytes());
         carRepository.saveAndFlush(car);
     }
 }
