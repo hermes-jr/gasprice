@@ -1,0 +1,121 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Refuels :: Add</title>
+
+    <script data-th-replace="fragments/common_headers.html :: includes"></script>
+
+    <link rel="stylesheet" data-th-href="@{/webjars/font-awesome/css/all.min.css}"/>
+
+    <link rel="stylesheet" data-th-href="@{/css/td.css}"/>
+    <script type="text/javascript" data-th-src="@{/js/moment.min.js}"></script>
+    <script type="text/javascript" data-th-src="@{/js/td.js}"></script>
+    <script type="text/javascript" data-th-src="@{/webjars/font-awesome/js/all.min.js}"></script>
+
+
+    <script type="text/javascript">
+        $(function () {
+            $('#refuelDateTime').datetimepicker({
+                format: 'YYYY-MM-DD HH:mm',
+                sideBySide: true
+            });
+        });
+    </script>
+
+</head>
+
+<body>
+
+<nav data-th-replace="fragments/navbar.html :: navbar"></nav>
+
+<main role="main" class="container">
+
+    <form action="#" data-th-action="@{/}" data-th-object="${refuel}" method="post"
+          enctype="multipart/form-data">
+        <div data-th-if="${#fields.hasGlobalErrors()}">
+            <div role="alert" class="alert alert-danger" data-th-each="err : ${#fields.globalErrors()}"
+                 data-th-text="${err}">Something went wrong...
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="refuelCar">Car</label>
+            <select id="refuelCar" class="form-control" data-th-field="*{car}" data-th-errorclass="is-invalid">
+                <option data-th-each="i : ${allCars}" data-th-value="${i.id}" data-th-text="${i.name}"
+                        data-th-selected="${i.id} == ${refuel.car.id}">Cheetah
+                </option>
+            </select>
+            <div class="invalid-feedback" data-th-if="${#fields.hasErrors('car')}"
+                 data-th-errors="*{car}">
+                Car error.
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="refuelPetrol">Petrol</label>
+            <select id="refuelPetrol" class="form-control" data-th-field="*{petrol}" data-th-errorclass="is-invalid">
+                <option data-th-each="i : ${allPetrols}" data-th-value="${i.id}" data-th-text="${i.name}"
+                        data-th-selected="${i.id} == ${refuel.petrol.id}">Standard-100
+                </option>
+            </select>
+            <div class="invalid-feedback" data-th-if="${#fields.hasErrors('petrol')}"
+                 data-th-errors="*{petrol}">
+                Petrol error.
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="refuelDateTime">Date and time</label>
+            <div style="position: relative">
+                <input type="text" class="form-control datetimepicker-input" id="refuelDateTime"
+                       data-toggle="datetimepicker" data-target="#refuelDateTime" data-th-field="*{datetime}"
+                       data-th-errorclass="is-invalid"/>
+                <div class="invalid-feedback" data-th-if="${#fields.hasErrors('datetime')}"
+                     data-th-errors="*{datetime}">
+                    Date and time error.
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="refuelPrice">Price</label>
+            <input type="number" class="form-control" id="refuelPrice" data-decimals="2"
+                   min="0.001" max="999.999" step="0.001"
+                   data-th-field="*{price}" data-th-errorclass="is-invalid"/>
+            <div class="invalid-feedback" data-th-if="${#fields.hasErrors('price')}"
+                 data-th-errors="*{price}">
+                Price error.
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="refuelAmount">Amount</label>
+            <input type="number" class="form-control" id="refuelAmount" data-decimals="2"
+                   min="0.001" max="999.999" step="0.001"
+                   data-th-field="*{amount}" data-th-errorclass="is-invalid"/>
+            <div class="invalid-feedback" data-th-if="${#fields.hasErrors('amount')}" data-th-errors="*{amount}">
+                Volume error.
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="refuelMileage">Mileage</label>
+            <input type="number" class="form-control" id="refuelMileage" data-decimals="0" step="1"
+                   data-th-field="*{mileage}" data-th-errorclass="is-invalid"/>
+            <div class="invalid-feedback" data-th-if="${#fields.hasErrors('mileage')}"
+                 data-th-errors="*{mileage}">
+                Mileage error.
+            </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Submit</button>
+
+    </form>
+
+</main>
+
+</body>
+</html>

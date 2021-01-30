@@ -31,8 +31,8 @@
         <tbody>
         <tr data-th-each="refuel: ${refuels}">
             <td data-th-text="${refuel.id}" class="text-right">1</td>
-            <td data-th-text="${refuel.carName}">Cheetah</td>
-            <td data-th-text="${refuel.petrolName}">Standard-100</td>
+            <td data-th-text="${refuel.car.name}">Cheetah</td>
+            <td data-th-text="${refuel.petrol.name}">Standard-100</td>
             <td data-th-text="${#numbers.formatDecimal(refuel.price,1,3)}" class="text-right">11.932</td>
             <td data-th-text="${#numbers.formatDecimal(refuel.price,1,2)}" class="text-right">30.99</td>
             <td data-th-text="${refuel.mileage}" class="text-right">10000</td>

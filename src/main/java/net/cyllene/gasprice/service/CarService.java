@@ -9,6 +9,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -27,5 +28,9 @@ public class CarService {
         car.setEstimatedConsumption(dto.getEstimatedConsumption());
         car.setImage(dto.getImage().getBytes());
         carRepository.saveAndFlush(car);
+    }
+
+    public List<Car> findAll() {
+        return carRepository.findAll();
     }
 }
