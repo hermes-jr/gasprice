@@ -58,7 +58,7 @@ public class RefuelController {
 
         refuelService.persist(refuelDto);
 
-        return "redirect:/listRefuels";
+        return "redirect:/refuels";
     }
 
     private void setDropdownContents(Model model) {
@@ -74,7 +74,7 @@ public class RefuelController {
         model.addAttribute("allPetrols", allPetrols);
     }
 
-    @GetMapping(value = "/listRefuels")
+    @GetMapping(value = "/refuels")
     public String petrolsListPage(Model model) {
         List<Refuel> refuels = refuelService.listForSummary();
 
