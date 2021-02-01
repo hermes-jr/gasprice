@@ -24,7 +24,7 @@ public class PetrolController {
     private final PetrolService petrolService;
 
     @GetMapping(value = "/petrols")
-    public String petrolsPage(Model model) {
+    public String petrolsListPage(Model model) {
         List<Petrol> petrols = petrolService.findAll();
 
         List<PetrolDto> dtoList = petrols.stream()
@@ -37,15 +37,15 @@ public class PetrolController {
     }
 
     @GetMapping(value = "/petrols/add")
-    public String addPetrolPage(Model model) {
+    public String petrolAddPage(Model model) {
         model.addAttribute("petrol", new PetrolDto());
         return "petrols_add";
     }
 
     @PostMapping("/petrols/add")
-    public String newPetrolSubmit(@ModelAttribute("petrol") @Valid  PetrolDto petrolDto,
-                                  BindingResult bindingResult,
-                                  Model model) {
+    public String petrolAddProcessForm(@ModelAttribute("petrol") @Valid  PetrolDto petrolDto,
+                                       BindingResult bindingResult,
+                                       Model model) {
         log.log(Level.FINE, "New petrol creation request: " + petrolDto);
         log.log(Level.FINEST, "Binding result: " + bindingResult);
 

@@ -30,7 +30,7 @@ public class CarController {
     private final CarService carService;
 
     @GetMapping(value = "/cars")
-    public String carsPage(
+    public String carsListPage(
             Model model,
             @RequestParam(value = "page", required = false) Integer page,
             @RequestParam(value = "size", required = false) Integer size) {
@@ -59,15 +59,15 @@ public class CarController {
 
 
     @GetMapping(value = "/cars/add")
-    public String addCarPage(Model model) {
+    public String carAddPage(Model model) {
         model.addAttribute("car", new CarDto());
         return "cars_add";
     }
 
     @PostMapping("/cars/add")
-    public String newCarSubmit(@ModelAttribute("car") @Valid CarDto carDto,
-                               BindingResult bindingResult,
-                               Model model) throws IOException {
+    public String carAddProcessForm(@ModelAttribute("car") @Valid CarDto carDto,
+                                    BindingResult bindingResult,
+                                    Model model) throws IOException {
 
         log.log(Level.FINE, "New car creation request: " + carDto);
         log.log(Level.FINEST, "Binding result: " + bindingResult);

@@ -33,7 +33,7 @@ public class RefuelController {
     private final PetrolService petrolService;
 
     @GetMapping(value = "/")
-    public String petrolsPage(Model model) {
+    public String refuelAddPage(Model model) {
         RefuelDto refuel = new RefuelDto();
         refuel.setDatetime(LocalDateTime.now());
         refuel.setPetrol(new IdNameDto(3, null)); // TODO: get latest
@@ -46,9 +46,9 @@ public class RefuelController {
     }
 
     @PostMapping("/")
-    public String newPetrolSubmit(@ModelAttribute("refuel") @Valid RefuelDto refuelDto,
-                                  BindingResult bindingResult,
-                                  Model model) {
+    public String refuelAddProcessForm(@ModelAttribute("refuel") @Valid RefuelDto refuelDto,
+                                       BindingResult bindingResult,
+                                       Model model) {
         log.log(Level.FINE, "New refuel creation request: " + refuelDto);
         log.log(Level.FINEST, "Binding result: " + bindingResult);
 
@@ -78,7 +78,7 @@ public class RefuelController {
     }
 
     @GetMapping(value = "/refuels")
-    public String petrolsListPage(Model model) {
+    public String refuelsListPage(Model model) {
         List<Refuel> refuels = refuelService.listForSummary();
 
         List<RefuelDto> dtoList = refuels.stream()

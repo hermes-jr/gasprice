@@ -22,7 +22,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @ActiveProfiles("test")
 //@WebMvcTest(controllers = {ExampleController.class})
 @AutoConfigureMockMvc
-class HelloWorldControllerTest {
+class ExperimentalControllerTest {
     @Inject
     private MockMvc mockMvc;
 
