@@ -16,7 +16,10 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.validation.Valid;
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.stream.Collectors;
@@ -83,6 +86,16 @@ public class RefuelController {
                 .collect(Collectors.toList());
 
         model.addAttribute("refuels", dtoList);
+
+        List<RefuelDto> reversedDtoList = new ArrayList<>(dtoList);
+        Collections.reverse(reversedDtoList);
+        List<LocalDateTime> chartDates = reversedDtoList.stream().map(RefuelDto::getDatetime).collect(Collectors.toList());
+        List<BigDecimal> chartPrices = reversedDtoList.stream().map(RefuelDto::getPrice).collect(Collectors.toList());
+        List<BigDecimal> chartAmounts = reversedDtoList.stream().map(RefuelDto::getAmount).collect(Collectors.toList());
+
+        model.addAttribute("chartDates", chartDates);
+        model.addAttribute("chartPrices", chartPrices);
+        model.addAttribute("chartAmounts", chartAmounts);
 
         return "summary";
     }

@@ -7,6 +7,75 @@
     <title>Refuels</title>
 
     <script data-th-replace="fragments/common_headers.html :: includes"></script>
+    <link rel="stylesheet" data-th-href="@{/webjars/chartjs/Chart.min.css}"/>
+    <script type="text/javascript" data-th-src="@{/webjars/chartjs/Chart.bundle.min.js}"></script>
+
+    <script data-th-inline="javascript">
+        // <![CDATA[
+        $(function () {
+            new Chart($('#mainChart'), {
+                type: 'line',
+                data: {
+                    labels: [[${chartDates}]],
+                    datasets: [{
+                        yAxisID: 'price',
+                        label: 'Price',
+                        borderColor: 'rgb(255, 99, 132)',
+                        backgroundColor: 'rgba(255, 99, 132, 0.3)',
+                        data: [[${chartPrices}]],
+                        borderWidth: 1
+                    },
+                        {
+                            yAxisID: 'amount',
+                            label: 'Amount',
+                            borderColor: 'rgb(54, 162, 235)',
+                            backgroundColor: 'rgba(54, 162, 235, 0.3)',
+                            data: [[${chartAmounts}]],
+                            borderWidth: 1
+                        }
+                    ]
+                },
+                options: {
+                    animation: {
+                        duration: 0
+                    },
+                    hover: {
+                        animationDuration: 0
+                    },
+                    responsiveAnimationDuration: 0,
+                    elements: {
+                        line: {
+                            tension: 0
+                        }
+                    },
+                    scales: {
+                        yAxes: [{
+                            id: 'price',
+                            position: 'right',
+                            ticks: {
+                                beginAtZero: true
+                            },
+                            gridLines: {
+                                display: false,
+                            },
+                        }, {
+                            id: 'amount',
+                            position: 'left',
+                        }],
+                        xAxes: [{
+                            ticks: {
+                                display: false
+                            },
+                            gridLines: {
+                                display: false,
+                            },
+                        }]
+                    }
+                }
+            });
+        });
+        // ]]>
+    </script>
 
 </head>
 
@@ -16,14 +85,16 @@
 
 <main role="main" class="container">
 
+    <canvas id="mainChart"></canvas>
+
     <table class="table table-sm">
         <thead>
         <tr>
             <th scope="col" class="text-right">Id</th>
             <th scope="col">Petrol</th>
             <th scope="col">Car</th>
-            <th scope="col" class="text-right">Amount</th>
             <th scope="col" class="text-right">Price</th>
+            <th scope="col" class="text-right">Amount</th>
             <th scope="col" class="text-right">Mileage</th>
             <th scope="col">Date Time</th>
         </tr>
@@ -33,8 +104,8 @@
             <td data-th-text="${refuel.id}" class="text-right">1</td>
             <td data-th-text="${refuel.car.name}">Cheetah</td>
             <td data-th-text="${refuel.petrol.name}">Standard-100</td>
-            <td data-th-text="${#numbers.formatDecimal(refuel.price,1,3)}" class="text-right">11.932</td>
             <td data-th-text="${#numbers.formatDecimal(refuel.price,1,2)}" class="text-right">30.99</td>
+            <td data-th-text="${#numbers.formatDecimal(refuel.amount,1,3)}" class="text-right">11.932</td>
             <td data-th-text="${refuel.mileage}" class="text-right">10000</td>
             <td data-th-text="${#temporals.format(refuel.datetime, 'yyyy-MM-dd HH:mm')}">2019-11-19 17:23</td>
         </tr>
