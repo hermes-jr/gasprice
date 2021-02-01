@@ -19,6 +19,7 @@
             Chart.defaults.LineWithLine = Chart.defaults.line;
             Chart.controllers.LineWithLine = Chart.controllers.line.extend({
                 draw: function (ease) {
+                    // noinspection JSPotentiallyInvalidConstructorUsage
                     Chart.controllers.line.prototype.draw.call(this, ease);
 
                     if (this.chart.tooltip._active && this.chart.tooltip._active.length) {
@@ -70,8 +71,18 @@
                             tension: 0
                         }
                     },
+                    animation: {
+                        duration: 0
+                    },
+                    hover: {
+                        animationDuration: 0
+                    },
+                    responsiveAnimationDuration: 0,
                     tooltips: {
                         intersect: false
+                    },
+                    legend: {
+                        align: 'end'
                     },
                     scales: {
                         yAxes: [{
@@ -110,16 +121,17 @@
 
 <main role="main" class="container">
 
-    <canvas id="mainChart" height="100"></canvas>
+    <canvas id="mainChart" class="mb-3" height="100"></canvas>
 
     <table class="table table-sm">
         <thead>
         <tr>
             <th scope="col" class="text-right">Id</th>
-            <th scope="col">Petrol</th>
             <th scope="col">Car</th>
+            <th scope="col">Petrol</th>
             <th scope="col" class="text-right">Price</th>
             <th scope="col" class="text-right">Amount</th>
+            <th scope="col" class="text-right">Total</th>
             <th scope="col" class="text-right">Mileage</th>
             <th scope="col">Date Time</th>
         </tr>
@@ -131,6 +143,8 @@
             <td data-th-text="${refuel.petrol.name}">Standard-100</td>
             <td data-th-text="${#numbers.formatDecimal(refuel.price,1,2)}" class="text-right">30.99</td>
             <td data-th-text="${#numbers.formatDecimal(refuel.amount,1,3)}" class="text-right">11.932</td>
+            <td data-th-text="${#numbers.formatDecimal(refuel.amount * refuel.price,1,2)}" class="text-right">369.77
+            </td>
             <td data-th-text="${refuel.mileage}" class="text-right">10000</td>
             <td data-th-text="${#temporals.format(refuel.datetime, 'yyyy-MM-dd HH:mm')}">2019-11-19 17:23</td>
         </tr>
