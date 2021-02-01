@@ -13,15 +13,44 @@
     <script data-th-inline="javascript">
         // <![CDATA[
         $(function () {
-            new Chart($('#mainChart'), {
-                type: 'line',
+            let ctx = $('#mainChart');
+
+            // https://stackoverflow.com/a/45172506/6948900
+            Chart.defaults.LineWithLine = Chart.defaults.line;
+            Chart.controllers.LineWithLine = Chart.controllers.line.extend({
+                draw: function (ease) {
+                    Chart.controllers.line.prototype.draw.call(this, ease);
+
+                    if (this.chart.tooltip._active && this.chart.tooltip._active.length) {
+                        let activePoint = this.chart.tooltip._active[0],
+                            ctx = this.chart.ctx,
+                            x = activePoint.tooltipPosition().x,
+                            topY = this.chart.legend.bottom,
+                            bottomY = this.chart.chartArea.bottom;
+
+                        // draw line
+                        ctx.save();
+                        ctx.beginPath();
+                        ctx.moveTo(x, topY);
+                        ctx.lineTo(x, bottomY);
+                        ctx.lineWidth = 1;
+                        ctx.strokeStyle = 'rgba(255, 99, 100, 0.5)';
+                        ctx.stroke();
+                        ctx.restore();
+                    }
+                }
+            });
+
+            new Chart(ctx, {
+                type: 'bar',
                 data: {
                     labels: [[${chartDates}]],
                     datasets: [{
+                        type: 'LineWithLine',
                         yAxisID: 'price',
                         label: 'Price',
-                        borderColor: 'rgb(255, 99, 132)',
-                        backgroundColor: 'rgba(255, 99, 132, 0.3)',
+                        borderColor: 'rgb(255, 99, 100)',
+                        backgroundColor: 'rgba(255, 99, 100, 0.0)',
                         data: [[${chartPrices}]],
                         borderWidth: 1
                     },
@@ -36,17 +65,13 @@
                     ]
                 },
                 options: {
-                    animation: {
-                        duration: 0
-                    },
-                    hover: {
-                        animationDuration: 0
-                    },
-                    responsiveAnimationDuration: 0,
                     elements: {
                         line: {
                             tension: 0
                         }
+                    },
+                    tooltips: {
+                        intersect: false
                     },
                     scales: {
                         yAxes: [{
@@ -85,7 +110,7 @@
 
 <main role="main" class="container">
 
-    <canvas id="mainChart"></canvas>
+    <canvas id="mainChart" height="100"></canvas>
 
     <table class="table table-sm">
         <thead>
