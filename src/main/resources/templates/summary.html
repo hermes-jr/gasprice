@@ -129,8 +129,8 @@
             <th scope="col" class="text-right">Id</th>
             <th scope="col">Car</th>
             <th scope="col">Petrol</th>
-            <th scope="col" class="text-right">Price</th>
             <th scope="col" class="text-right">Amount</th>
+            <th scope="col" class="text-right">Price</th>
             <th scope="col" class="text-right">Total</th>
             <th scope="col" class="text-right">Mileage</th>
             <th scope="col">Date Time</th>
@@ -141,12 +141,12 @@
             <td data-th-text="${refuel.id}" class="text-right">1</td>
             <td data-th-text="${refuel.car.name}">Cheetah</td>
             <td data-th-text="${refuel.petrol.name}">Standard-100</td>
-            <td data-th-text="${#numbers.formatDecimal(refuel.price,1,2)}" class="text-right">30.99</td>
             <td data-th-text="${#numbers.formatDecimal(refuel.amount,1,3)}" class="text-right">11.932</td>
+            <td data-th-text="${#numbers.formatDecimal(refuel.price,1,2)}" class="text-right">30.99</td>
             <td data-th-text="${#numbers.formatDecimal(refuel.amount * refuel.price,1,2)}" class="text-right">369.77
             </td>
             <td data-th-text="${refuel.mileage}" class="text-right">10000</td>
-            <td data-th-text="${#temporals.format(refuel.datetime, 'yyyy-MM-dd HH:mm')}">2019-11-19 17:23</td>
+            <td data-th-text="${#temporals.format(refuel.datetime, 'dd-MM-yyy HH:mm')}">19-11-2019 17:23</td>
         </tr>
         </tbody>
     </table>

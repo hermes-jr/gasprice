@@ -24,7 +24,7 @@ public class RefuelDto {
     @NotNull(message = "must not be empty")
     private Integer mileage;
     @NotNull(message = "must not be empty")
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
+    @DateTimeFormat(pattern = "dd-MM-yyyy HH:mm")
     private LocalDateTime datetime;
 
     public RefuelDto(Refuel model) {
