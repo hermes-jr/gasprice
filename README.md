@@ -1,4 +1,4 @@
-## Gasprice
+## Gasprice - a thymeleaf playground
 
 1. Pack
     ```bash
